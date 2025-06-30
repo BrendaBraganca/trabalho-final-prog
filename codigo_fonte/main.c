@@ -1,13 +1,64 @@
 #include "raylib.h"
+#include "mapa.h"
+#include <stdio.h>
 
 int main(void) {
-    InitWindow(800, 450, "Hello Raylib");
+    InitWindow(1200, 600, "Começando o jogo");
+    SetTargetFPS(60);  
+
+    // Inicializa o mapa
+    char **mapa = inicializarMapa("mapas/mapaB.txt");
+    if (!mapa) {
+        fprintf(stderr, "Falha ao carregar mapa!\n");
+        CloseWindow();
+        return 1;
+    }
+
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        DrawText("Hello, Raylib!", 190, 200, 20, LIGHTGRAY);
+
+        // Desenha o mapa
+        for (int linha = 0; linha < LINHAS; linha++) {
+            for (int col = 0; col < COLUNAS; col++) {
+                char bloco = mapa[linha][col];
+                int x = col * 20;
+                int y = linha * 20;
+
+                switch (bloco) {
+                    case 'W': //parede indestrutivel
+                        DrawRectangle(x, y, 20, 20, DARKGRAY);
+                        break;
+                    case 'D': // parede destruivel
+                        DrawRectangle(x, y, 20, 20, GRAY);
+                        break;
+                    case 'K': // caixa com chave
+                    case 'B': //caixa sem chave
+                        DrawRectangle(x, y, 20, 20, BROWN);
+                        break;
+                    case 'E': // inimigo
+                        DrawRectangle(x, y, 20, 20, RED);
+                        break;
+                    case 'J': //jogador
+                        DrawRectangle(x, y, 20, 20, BLUE);
+                        break;
+                    case ' ':
+                        DrawRectangle(x, y, 20, 20, LIGHTGRAY);
+                        break;
+                }
+            }
+        }
+
         EndDrawing();
     }
+
+    
+    finalizarMapa(mapa);
     CloseWindow();
+
     return 0;
 }
+
+
+
+
