@@ -1,18 +1,23 @@
 #include "raylib.h"
 #include "mapa.h"
+#include "jogador.h"
 #include <stdio.h>
 
 int main(void) {
     InitWindow(1200, 600, "Começando o jogo");
     SetTargetFPS(60);  
 
-    // Inicializa o mapa
+    //Inicializa o mapa
     char **mapa = inicializarMapa("mapas/mapaB.txt");
     if (!mapa) {
         fprintf(stderr, "Falha ao carregar mapa!\n");
         CloseWindow();
         return 1;
     }
+
+    //Inicializa o Jogador
+    tipoJogador jogador;
+    inicializarJogador(&jogador);
 
     while (!WindowShouldClose()) {
         BeginDrawing();
@@ -41,37 +46,4 @@ int main(void) {
                         DrawRectangle(x, y, 20, 20, RED);
                         break;
                     case 'J': //jogador
-                        DrawRectangle(x, y, 20, 20, BLUE);
-                        break;
-                    case ' ':
-                        DrawRectangle(x, y, 20, 20, LIGHTGRAY);
-                        break;
-                }
-            }
-        }
-
-        //////// Desenho do painel na parte inferior
-        DrawRectangle(0, LINHAS * 20, COLUNAS * 20, 100, BLACK);
-
-        char texto[128];
-        int vidas = 3;
-        int pontuacao = 150;
-        int bombas = 5;
-
-        sprintf(texto, "Vidas: %d   Pontos: %d   Bombas: %d", vidas, pontuacao, bombas);
-        DrawText(texto, 10, LINHAS * 20 + 30, 20, WHITE);
-        ///////////
-
-        EndDrawing();
-    }
-
-    
-    finalizarMapa(mapa);
-    CloseWindow();
-
-    return 0;
-}
-
-
-
-
+                        DrawRectangle
