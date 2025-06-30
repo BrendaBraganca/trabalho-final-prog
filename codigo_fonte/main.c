@@ -17,6 +17,7 @@ int main(void) {
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
+    
 
         // Desenha o mapa
         for (int linha = 0; linha < LINHAS; linha++) {
@@ -48,6 +49,18 @@ int main(void) {
                 }
             }
         }
+
+        //////// Desenho do painel na parte inferior
+        DrawRectangle(0, LINHAS * 20, COLUNAS * 20, 100, BLACK);
+
+        char texto[128];
+        int vidas = 3;
+        int pontuacao = 150;
+        int bombas = 5;
+
+        sprintf(texto, "Vidas: %d   Pontos: %d   Bombas: %d", vidas, pontuacao, bombas);
+        DrawText(texto, 10, LINHAS * 20 + 30, 20, WHITE);
+        ///////////
 
         EndDrawing();
     }
