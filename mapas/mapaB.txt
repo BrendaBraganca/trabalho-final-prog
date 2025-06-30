@@ -1,25 +1,25 @@
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-WJ     D       B      W      E     D       K     W     D   W
+WJ     D       B      W            D       K     W     W   W
 W WWWWWWW WWWWWWW WWWWW WWWWWWW WWWWWWW WWWWWWW WWWWWWW    W
-W     B     D     W     B     K     W       D     E     W  W
-W WWWWWWWWWWWWWWWWWWWWWWWWWWW.  WWWWWWWWWWWWWWWWWWWWWWWWWW W
-W     D     B     K     D       E     D     B     K     D  W
+W     B     D     W     B     D     W       D     E     W  W
+W WWWWWWWWWWWWWWWWWWWWWWWWWWW   WWWWWWWWWWWWWWWWWWWWWWWWWW W
+W     D     B     K     D       W     D     B     W     D  W
 W W WWW W WWW W WWW W WWW  W WWW W WWW W WWW W   WWW  W WWWW
-W B     D     W      E      W     D     B     K     D      W
+W B     D     W      E      W     D     B     D     D      W
 W WWWWWWWWWWWWWWWWWWWW WWWWWWWWWWWWWWWWWW   WWWWWWWWWWWWWW W
-W     D     K     B     W     D       E     D     B     D  W
+W     D     D     B     W     D             D     B     D  W
 W W WWWWWWWWWWWWWWWWWWW    WWWWWWWWWWWWWWWWWWWWWWWWWWWWW W W
 W D      B     D     W      K     D      B     D     E     W
 W WWWWWW  WWWWWWWWWWWWWWWWWW   WWWWWWWWWWWWWWWWWWWWWWWWWWW W
-W     B     D     B      D     K      W     D     B     D  W
+W     B     D     B      D     D      W     D     B     D  W
 W W WWWWW W WWWWW W WWWWW W WWWWW W WWWWW.  W   WWWWW W WWWW
-W D     K     D     E      D     B      D      K     D     W
+W D     K     D     E      D     B      D      D     D     W
 W WWWWWWWWWWWWWWWWWWWWW.WWWWWWWWWW   WWWWWWWWWWWWWWWWWWWWW W
-W     B     D     B       D     E     D     B     D     K  W
+W     B     D     B       D           D     B     D     D  W
 W W WWWWW W WWWWW W WWWWW W WWWWW   W WWWWW   W WWWWW W WWWW
-W D     B     D     B      D      K      D     B     D     W
+W D     B     D     B      D      D      D     B     D     W
 W WWWWWWWWWWWWWWWWWWWWWW   WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW W
-W     K     D     B     D       E     D     K     D     B  W
+W     D     D     B     D       W     D     K     D     B  W
 W W WWWWW W WWWWW W   WWWWW   W   WWWWW W     WWWWW W  WWWWW
-W     E      B    B       B      E     B      D     B      W
+W     E      B    B       B      D     B      D     B      W
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
