@@ -10,7 +10,7 @@ int main(void) {
     SetTargetFPS(60);  
 
     //Inicializa o mapa
-    char **mapa = inicializarMapa("mapas/mapaB.txt");
+    char **mapa = inicializarMapa("mapas/mapaA.txt");
     if (!mapa) {
         fprintf(stderr, "Falha ao carregar mapa!\n");
         CloseWindow();
@@ -20,6 +20,7 @@ int main(void) {
     //Inicializa os Inimigos
     tipoInimigo inimigos[MAX_INIMIGOS];
     inicializaInimigos(inimigos, mapa);
+    float tempoPosicaoInimigo = 0;
 
     //Inicializa o Jogador
     tipoJogador jogador;
@@ -30,6 +31,14 @@ int main(void) {
     inicializarBombas(bombas);
 
     while (!WindowShouldClose()) {
+
+        float intervaloInimigo = GetFrameTime();
+        tempoPosicaoInimigo = tempoPosicaoInimigo + intervaloInimigo;
+        if(tempoPosicaoInimigo >= 0.5f){
+            movimentarInimigos(inimigos, mapa);
+            tempoPosicaoInimigo = 0;
+        }
+
         BeginDrawing();
         ClearBackground(RAYWHITE);
     
@@ -49,14 +58,10 @@ int main(void) {
                         DrawRectangle(x, y, 20, 20, GRAY);
                         break;
                     case 'K': // caixa com chave
-                    case 'B': //caixa sem chave
                         DrawRectangle(x, y, 20, 20, BROWN);
                         break;
-                    case 'E': // inimigo
-                        DrawRectangle(x, y, 20, 20, RED);
-                        break;
-                    case 'J': //jogador
-                        DrawRectangle(x, y, 20, 20, LIGHTGRAY);
+                    case 'B': //caixa sem chave
+                        DrawRectangle(x, y, 20, 20, BROWN);
                         break;
                     case ' ':
                         DrawRectangle(x, y, 20, 20, LIGHTGRAY);

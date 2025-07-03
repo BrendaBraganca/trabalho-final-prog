@@ -9,8 +9,8 @@ W   D     D     B     D    B    D     B     D       B     DW
 W WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW  W
 W W   W     W   W     W   W   W   W     W   W      W   W  DW
 W W D W  D  W D W D D W D W D W D W D D W D W D W D W  W  DW
-W W   W     W   W     W   W   W   W     W   W   W   W   W  W
-W WWWWW WWWWWWW WWWWWWW WWWWW WWWWW WWWWWWW WWWWW WWWWW WWWW
+W W             W     W   W   W   W     W   W   W   W   W  W
+W WWWWW     WWW WWWWWWW WWWWW WWWWW WWWWWWW WWWWW WWWWW WWWW
 W   K       B      K      E       K     B       E      K   W
 W WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW W
 W          W     W     W     W     W     W     W     W     W

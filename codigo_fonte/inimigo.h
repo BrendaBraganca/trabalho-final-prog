@@ -9,3 +9,4 @@ typedef struct {
 
 void inicializaInimigos(tipoInimigo inimigos[], char **mapa);
 void desenhaInimigos(tipoInimigo inimigos[]);
+void movimentarInimigos(tipoInimigo inimigos[], char **mapa);
