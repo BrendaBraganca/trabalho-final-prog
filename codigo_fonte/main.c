@@ -71,6 +71,40 @@ int main(void) {
         //desenha os inimigos a partir da struct tambem
         desenhaInimigos(inimigos);
 
+        //movitacao do jogador
+        if (IsKeyPressed(KEY_UP)) {
+            int linhaDeCima = jogador.posicao.linha -1;
+            int colunaAtual = jogador.posicao.coluna;
+            char proxPosicao = mapa[linhaDeCima][colunaAtual];
+            if(proxPosicao == ' ' || proxPosicao == 'J' ){
+                jogador.posicao.linha--;
+            }
+        }
+        if (IsKeyPressed(KEY_DOWN)) {
+            int linhaDeBaixo = jogador.posicao.linha +1;
+            int colunaAtual = jogador.posicao.coluna;
+            char proxPosicao = mapa[linhaDeBaixo][colunaAtual];
+            if(proxPosicao == ' '){
+                jogador.posicao.linha++;
+            }
+        }          
+        if (IsKeyPressed(KEY_LEFT)) {
+            int colunaDaEsquerda = jogador.posicao.coluna -1;
+            int linhaAtual = jogador.posicao.linha;
+            char proxPosicao = mapa[linhaAtual][colunaDaEsquerda];
+            if(proxPosicao == ' ' || proxPosicao == 'J'){
+                jogador.posicao.coluna--;
+            }
+        }
+        if (IsKeyPressed(KEY_RIGHT)) {
+            int colunaDaDireita = jogador.posicao.coluna +1;
+            int linhaAtual = jogador.posicao.linha;
+            char proxPosicao =  mapa[linhaAtual][colunaDaDireita];
+            if(proxPosicao == ' '){
+                jogador.posicao.coluna++;
+            }
+        }
+
         // logica das bombas
         float intervalo = GetFrameTime();
         atualizarBombas(bombas, intervalo);
@@ -82,7 +116,7 @@ int main(void) {
 
         desenharBombas(bombas);
 
-        //////// Desenho do painel na parte inferior
+        ////////////Desenho do painel na parte inferior
         DrawRectangle(0, LINHAS * 20, COLUNAS * 20, 100, BLACK);
 
         char texto[128];
