@@ -2,6 +2,7 @@
 #include "mapa.h"
 #include "jogador.h"
 #include "inimigo.h"
+#include "bomba.h"
 #include <stdio.h>
 
 int main(void) {
@@ -23,6 +24,10 @@ int main(void) {
     //Inicializa o Jogador
     tipoJogador jogador;
     inicializarJogador(&jogador);
+
+    //Inicializa as Bombas
+    tipoBomba bombas[MAX_BOMBAS];
+    inicializarBombas(bombas);
 
     while (!WindowShouldClose()) {
         BeginDrawing();
@@ -65,6 +70,17 @@ int main(void) {
 
         //desenha os inimigos a partir da struct tambem
         desenhaInimigos(inimigos);
+
+        // logica das bombas
+        float intervalo = GetFrameTime();
+        atualizarBombas(bombas, intervalo);
+        if (IsKeyPressed(KEY_B)) {
+            if (plantarBombas(bombas, jogador.posicao, jogador.bombas)) {
+                jogador.bombas--; // desconta do arsenal
+            }
+        }
+
+        desenharBombas(bombas);
 
         //////// Desenho do painel na parte inferior
         DrawRectangle(0, LINHAS * 20, COLUNAS * 20, 100, BLACK);
