@@ -66,6 +66,12 @@ int main(void) {
                     case ' ':
                         DrawRectangle(x, y, 20, 20, LIGHTGRAY);
                         break;
+                    case 'J':
+                    case 'E':
+                        break;
+                    default:
+                        printf("AQUIIIIIIIII %c", bloco);
+                        break;
                 }
             }
         }
