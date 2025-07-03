@@ -1,3 +1,4 @@
+#pragma once
 #include "posicao.h"
 #define JOGADOR_H
 

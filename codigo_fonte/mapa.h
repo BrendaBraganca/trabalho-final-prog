@@ -1,3 +1,4 @@
+#pragma once
 #define MAPA_H
 
 //tamanhos especificados no roteiro do trabalho

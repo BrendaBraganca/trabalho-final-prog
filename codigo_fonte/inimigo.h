@@ -1,3 +1,4 @@
+#pragma once
 #define INIMIGO_H
 #include "posicao.h"
 #define MAX_INIMIGOS 5
@@ -10,3 +11,5 @@ typedef struct {
 void inicializaInimigos(tipoInimigo inimigos[], char **mapa);
 void desenhaInimigos(tipoInimigo inimigos[]);
 void movimentarInimigos(tipoInimigo inimigos[], char **mapa);
+
+
