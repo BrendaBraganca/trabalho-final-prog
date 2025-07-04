@@ -58,7 +58,7 @@ int main(void) {
                         DrawRectangle(x, y, 20, 20, GRAY);
                         break;
                     case 'K': // caixa com chave
-                        DrawRectangle(x, y, 20, 20, BROWN);
+                        DrawRectangle(x, y, 20, 20, MARROM);
                         break;
                     case 'B': //caixa sem chave
                         DrawRectangle(x, y, 20, 20, BROWN);
@@ -68,6 +68,9 @@ int main(void) {
                         break;
                     case 'J':
                     case 'E':
+                        break;
+                    case 'C':  // caso a caixa com chave seja explodida
+                         DrawRectangle(x, y, 20, 20, YELLOW);
                         break;
                 }
             }
@@ -84,32 +87,48 @@ int main(void) {
             int linhaDeCima = jogador.posicao.linha -1;
             int colunaAtual = jogador.posicao.coluna;
             char proxPosicao = mapa[linhaDeCima][colunaAtual];
-            if(proxPosicao == ' ' || proxPosicao == 'J' ){
+            if(proxPosicao == ' ' || proxPosicao == 'J' || proxPosicao == 'C'){
                 jogador.posicao.linha--;
+                if(proxPosicao == 'C'){
+                    jogador.chaves++;
+                    mapa[linhaDeCima][colunaAtual] = ' ';
+                }
             }
         }
         if (IsKeyPressed(KEY_DOWN)) {
             int linhaDeBaixo = jogador.posicao.linha +1;
             int colunaAtual = jogador.posicao.coluna;
             char proxPosicao = mapa[linhaDeBaixo][colunaAtual];
-            if(proxPosicao == ' '){
+            if(proxPosicao == ' ' || proxPosicao == 'C'){
                 jogador.posicao.linha++;
+                if(proxPosicao == 'C'){
+                    jogador.chaves++;
+                    mapa[linhaDeBaixo][colunaAtual] = ' ';
+                }
             }
         }          
         if (IsKeyPressed(KEY_LEFT)) {
             int colunaDaEsquerda = jogador.posicao.coluna -1;
             int linhaAtual = jogador.posicao.linha;
             char proxPosicao = mapa[linhaAtual][colunaDaEsquerda];
-            if(proxPosicao == ' ' || proxPosicao == 'J'){
+            if(proxPosicao == ' ' || proxPosicao == 'J' || proxPosicao == 'C'){
                 jogador.posicao.coluna--;
+                if(proxPosicao == 'C'){
+                    jogador.chaves++;
+                    mapa[linhaAtual][colunaDaEsquerda] = ' ';
+                }
             }
         }
         if (IsKeyPressed(KEY_RIGHT)) {
             int colunaDaDireita = jogador.posicao.coluna +1;
             int linhaAtual = jogador.posicao.linha;
             char proxPosicao =  mapa[linhaAtual][colunaDaDireita];
-            if(proxPosicao == ' '){
+            if(proxPosicao == ' ' || proxPosicao == 'C'){
                 jogador.posicao.coluna++;
+                if(proxPosicao == 'C'){
+                    jogador.chaves++;
+                    mapa[linhaAtual][colunaDaDireita] = ' ';
+                }
             }
         }
 
@@ -129,7 +148,7 @@ int main(void) {
 
         char texto[128];
 
-        sprintf(texto, "Vidas: %d   Pontos: %d   Bombas: %d", jogador.vidas, jogador.pontuacao, jogador.bombas);
+        sprintf(texto, "Vidas: %d   Pontos: %d   Bombas: %d  Chaves: %d", jogador.vidas, jogador.pontuacao, jogador.bombas, jogador.chaves);
         DrawText(texto, 10, LINHAS * 20 + 30, 20, WHITE);
         ///////////
 

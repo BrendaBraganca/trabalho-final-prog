@@ -7,6 +7,7 @@ typedef struct tipoJogador{
     int vidas;
     int bombas;
     int pontuacao;
+    int chaves;
 } tipoJogador;
 
 void inicializarJogador(tipoJogador *j);

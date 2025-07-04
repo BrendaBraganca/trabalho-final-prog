@@ -7,6 +7,7 @@ void inicializarJogador(tipoJogador *j){
     j->vidas= 3;
     j->bombas=3;
     j->pontuacao = 0;
+    j->chaves = 0;
 }
 
 void desenharJogador(tipoJogador j) {

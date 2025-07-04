@@ -45,9 +45,12 @@ void explodirBombas(tipoBomba *bomba, char **mapa, tipoInimigo inimigos[], tipoJ
 
         char localBomba = mapa[novaLinhaBomba][novaColunaBomba];
 
-        if(localBomba == 'B' || localBomba == 'K' || localBomba == 'D'){
+        if (localBomba == 'K') {
+            mapa[novaLinhaBomba][novaColunaBomba] = 'C';  //caso seja uam caixa com chave ->  chave fica visível
+            jogador->pontuacao += 100;
+        } else if (localBomba == 'B' || localBomba == 'D') {
             mapa[novaLinhaBomba][novaColunaBomba] = ' ';
-            jogador->pontuacao = jogador->pontuacao +100;
+            jogador->pontuacao += 100;
         }
 
         for(int j =0; j < MAX_INIMIGOS; j++){
