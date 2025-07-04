@@ -1,5 +1,7 @@
 #pragma once
 #include "posicao.h"
+#include "jogador.h"
+#include "inimigo.h"
 #define BOMBA_H
 #define MAX_BOMBAS 3
 #define TEMPO_EXPLOSAO 3.0f
@@ -15,7 +17,8 @@ typedef struct {
 
 void inicializarBombas(tipoBomba bombas[]);
 int plantarBombas(tipoBomba bombas[], tipoPosicao posicao, int bombasRestantes); // retorna se a bomba conseguiu ser plantada ou não
-void atualizarBombas(tipoBomba bombas[], float intervalo); 
+void explodirBombas(tipoBomba *bomba, char **mapa, tipoInimigo inimigos[], tipoJogador *jogador);
+void atualizarBombas(tipoBomba bombas[], float intervalo, char **mapa, tipoInimigo inimigos[], tipoJogador *jogador);
 void desenharBombas(tipoBomba bombas[]);
 
 

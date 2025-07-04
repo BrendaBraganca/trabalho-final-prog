@@ -10,7 +10,7 @@ int main(void) {
     SetTargetFPS(60);  
 
     //Inicializa o mapa
-    char **mapa = inicializarMapa("mapas/mapaA.txt");
+    char **mapa = inicializarMapa("mapas/mapaB.txt");
     if (!mapa) {
         fprintf(stderr, "Falha ao carregar mapa!\n");
         CloseWindow();
@@ -115,7 +115,7 @@ int main(void) {
 
         // logica das bombas
         float intervalo = GetFrameTime();
-        atualizarBombas(bombas, intervalo);
+        atualizarBombas(bombas, intervalo, mapa, inimigos, &jogador);
         if (IsKeyPressed(KEY_B)) {
             if (plantarBombas(bombas, jogador.posicao, jogador.bombas)) {
                 jogador.bombas--; // desconta do arsenal
