@@ -30,6 +30,9 @@ int main(void) {
     tipoBomba bombas[MAX_BOMBAS];
     inicializarBombas(bombas);
 
+    int nivelCompleto = 0;
+    double tempoAlertaNivel = 0;
+
     while (!WindowShouldClose()) {
 
         float intervaloInimigo = GetFrameTime();
@@ -58,7 +61,7 @@ int main(void) {
                         DrawRectangle(x, y, 20, 20, GRAY);
                         break;
                     case 'K': // caixa com chave
-                        DrawRectangle(x, y, 20, 20, MARROM);
+                        DrawRectangle(x, y, 20, 20, PURPLE); //depois colocar em marrom dnv
                         break;
                     case 'B': //caixa sem chave
                         DrawRectangle(x, y, 20, 20, BROWN);
@@ -143,12 +146,38 @@ int main(void) {
 
         desenharBombas(bombas);
 
+        // Passando para o proximo nivel
+        if(jogador.chaves == 5 && !nivelCompleto){
+            nivelCompleto = 1;
+            tempoAlertaNivel = GetTime();
+        }
+
+        if(nivelCompleto){
+            const char *msgNivel = "NOVO NIVEL!!!";
+            int tamFonte = 30;
+            int larguraTexto = MeasureText(msgNivel, tamFonte);
+            int x = (1200 - larguraTexto)/2; //deixar texto no meio
+            int y = 250;
+
+            DrawRectangle(x-10, y-10, larguraTexto + 20, tamFonte+20, PURPLE);
+            DrawText(msgNivel, x, y, tamFonte, WHITE);
+            if(GetTime() - tempoAlertaNivel >= 2.0){
+                nivelCompleto = 0;
+                jogador.chaves = 0;
+                jogador.posicao.linha = 1;
+                jogador.posicao.coluna = 1;
+
+                finalizarMapa(mapa);
+                mapa = inicializarMapa("mapas/mapaA.txt");
+            }
+        }
+
         ////////////Desenho do painel na parte inferior
         DrawRectangle(0, LINHAS * 20, COLUNAS * 20, 100, BLACK);
 
         char texto[128];
 
-        sprintf(texto, "Vidas: %d   Pontos: %d   Bombas: %d  Chaves: %d", jogador.vidas, jogador.pontuacao, jogador.bombas, jogador.chaves);
+        sprintf(texto, "Vidas: %d   Pontos: %d   Bombas: %d  Chaves: %d", jogador.vidas, jogador.pontuacao, jogador.bombas, jogador.chaves); // tirar a parte das chaves depois
         DrawText(texto, 10, LINHAS * 20 + 30, 20, WHITE);
         ///////////
 

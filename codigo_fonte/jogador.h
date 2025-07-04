@@ -11,8 +11,4 @@ typedef struct tipoJogador{
 } tipoJogador;
 
 void inicializarJogador(tipoJogador *j);
-void desenharJogador(tipoJogador j);
-
-
-
-
+void desenharJogador(tipo
