@@ -4,6 +4,7 @@
 #include "inimigo.h"
 #include "bomba.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 void reiniciaJogo(char ***mapa, tipoJogador *jogador, tipoBomba bombas[], tipoInimigo inimigos[], int *gameOver){
     finalizarMapa(*mapa);
@@ -70,7 +71,7 @@ int main(void) {
                 if(inimigos[i].posicao.linha == jogador.posicao.linha && inimigos[i].posicao.coluna == jogador.posicao.coluna){
 
                     jogador.vidas--;
-                    jogador.pontuacao = jogador.pontuacao - 100;
+                    jogador.pontuacao = MIN(abs(jogador.pontuacao - 100), 0);
                     jogador.posicao.linha = 1;
                     jogador.posicao.coluna = 1;
                     break; // se dois inimigos tiverem juntos e matarem o jogador, ele so perde uma vida

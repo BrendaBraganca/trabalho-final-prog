@@ -5,6 +5,7 @@
 #include "raylib.h"
 #include <stdlib.h>
 
+
 void inicializarBombas(tipoBomba bombas[]){
     for(int i =0; i < MAX_BOMBAS; i++){
         bombas[i].ativa = 0;
@@ -63,7 +64,7 @@ void explodirBombas(tipoBomba *bomba, char **mapa, tipoInimigo inimigos[], tipoJ
 
         if(jogador->posicao.linha == novaLinhaBomba && jogador->posicao.coluna == novaColunaBomba){
             jogador->vidas--;
-            jogador->pontuacao = jogador->pontuacao - 100;
+            jogador->pontuacao = MIN(abs(jogador->pontuacao - 100),  0);
         }
 
     }

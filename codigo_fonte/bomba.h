@@ -6,6 +6,7 @@
 #define MAX_BOMBAS 3
 #define TEMPO_EXPLOSAO 3.0f
 #define RAIO_EXPLOSAO 100
+#define MIN(a, b) ((a) < (b) ? (a) : (b)) // pra pontuacao nao ficar negativa
 
 typedef struct {
     tipoPosicao posicao;
