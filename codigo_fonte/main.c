@@ -103,7 +103,7 @@ int main(void) {
                             DrawRectangle(x, y, 20, 20, PURPLE);
                             break;
                         case ' ':
-                            DrawRectangle(x, y, 20, 20, LIGHTGRAY);
+                            DrawRectangle(x, y, 20, 20, LIGHTGRAY); //LIGHTGRAY
                             break;
                         case 'J':
                         case 'E':
