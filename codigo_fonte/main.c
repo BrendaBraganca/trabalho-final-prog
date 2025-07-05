@@ -5,6 +5,20 @@
 #include "bomba.h"
 #include <stdio.h>
 
+void reiniciaJogo(char ***mapa, tipoJogador *jogador, tipoBomba bombas[], tipoInimigo inimigos[], int *gameOver){
+    finalizarMapa(*mapa);
+    *mapa = inicializarMapa("mapas/mapaB.txt");
+    jogador->vidas = 3;
+    jogador->pontuacao = 0;
+    jogador->bombas = 3;
+    jogador->chaves = 0;
+    jogador->posicao.linha = 1;
+    jogador->posicao.coluna = 1;
+    inicializarBombas(bombas);
+    inicializaInimigos(inimigos, *mapa);
+    *gameOver = 0;
+}
+
 int main(void) {
     InitWindow(1200, 600, "Começando o jogo");
     SetTargetFPS(60);  
@@ -30,147 +44,186 @@ int main(void) {
     tipoBomba bombas[MAX_BOMBAS];
     inicializarBombas(bombas);
 
+    //Logica de nivel
     int nivelCompleto = 0;
     double tempoAlertaNivel = 0;
 
+    //Logica game over
+    int gameOver = 0;
+    double tempoGameOver = 0;
+
     while (!WindowShouldClose()) {
-
-        float intervaloInimigo = GetFrameTime();
-        tempoPosicaoInimigo = tempoPosicaoInimigo + intervaloInimigo;
-        if(tempoPosicaoInimigo >= 0.5f){
-            movimentarInimigos(inimigos, mapa);
-            tempoPosicaoInimigo = 0;
-        }
-
         BeginDrawing();
         ClearBackground(RAYWHITE);
-    
 
-        // Desenha o mapa
-        for (int linha = 0; linha < LINHAS; linha++) {
-            for (int col = 0; col < COLUNAS; col++) {
-                char bloco = mapa[linha][col];
-                int x = col * 20;
-                int y = linha * 20;
+        if(!gameOver){
+            //inimigo comeca a se movimentar
+            float intervaloInimigo = GetFrameTime();
+            tempoPosicaoInimigo = tempoPosicaoInimigo + intervaloInimigo;
+            if(tempoPosicaoInimigo >= 0.5f){
+                movimentarInimigos(inimigos, mapa);
+                tempoPosicaoInimigo = 0;
+            }
 
-                switch (bloco) {
-                    case 'W': //parede indestrutivel
-                        DrawRectangle(x, y, 20, 20, DARKGRAY);
-                        break;
-                    case 'D': // parede destruivel
-                        DrawRectangle(x, y, 20, 20, GRAY);
-                        break;
-                    case 'K': // caixa com chave
-                        DrawRectangle(x, y, 20, 20, PURPLE); //depois colocar em marrom dnv
-                        break;
-                    case 'B': //caixa sem chave
-                        DrawRectangle(x, y, 20, 20, BROWN);
-                        break;
-                    case ' ':
-                        DrawRectangle(x, y, 20, 20, LIGHTGRAY);
-                        break;
-                    case 'J':
-                    case 'E':
-                        break;
-                    case 'C':  // caso a caixa com chave seja explodida
-                         DrawRectangle(x, y, 20, 20, YELLOW);
-                        break;
+            // verifica se inimigo tocou no jogador
+            for(int i = 0; i < MAX_INIMIGOS; i++){
+                if(inimigos[i].posicao.linha == jogador.posicao.linha && inimigos[i].posicao.coluna == jogador.posicao.coluna){
+
+                    jogador.vidas--;
+                    jogador.pontuacao = jogador.pontuacao - 100;
+                    jogador.posicao.linha = 1;
+                    jogador.posicao.coluna = 1;
+                    break; // se dois inimigos tiverem juntos e matarem o jogador, ele so perde uma vida
+                }
+            }    
+
+            // Desenha o mapa
+            for (int linha = 0; linha < LINHAS; linha++) {
+                for (int col = 0; col < COLUNAS; col++) {
+                    char bloco = mapa[linha][col];
+                    int x = col * 20;
+                    int y = linha * 20;
+
+                    switch (bloco) {
+                        case 'W': //parede indestrutivel
+                            DrawRectangle(x, y, 20, 20, DARKGRAY);
+                            break;
+                        case 'D': // parede destruivel
+                            DrawRectangle(x, y, 20, 20, GRAY);
+                            break;
+                        case 'K': // caixa com chave
+                            DrawRectangle(x, y, 20, 20, PURPLE); //depois colocar em marrom dnv
+                            break;
+                        case 'B': //caixa sem chave
+                            DrawRectangle(x, y, 20, 20, BROWN);
+                            break;
+                        case ' ':
+                            DrawRectangle(x, y, 20, 20, LIGHTGRAY);
+                            break;
+                        case 'J':
+                        case 'E':
+                            break;
+                        case 'C':  // caso a caixa com chave seja explodida
+                            DrawRectangle(x, y, 20, 20, YELLOW);
+                            break;
+                    }
                 }
             }
-        }
 
-        //desenha o jogador a partir da struct
-        desenharJogador(jogador);
+            //desenha o jogador a partir da struct
+            desenharJogador(jogador);
 
-        //desenha os inimigos a partir da struct tambem
-        desenhaInimigos(inimigos);
+            //desenha os inimigos a partir da struct tambem
+            desenhaInimigos(inimigos);
 
-        //movitacao do jogador
-        if (IsKeyPressed(KEY_UP)) {
-            int linhaDeCima = jogador.posicao.linha -1;
-            int colunaAtual = jogador.posicao.coluna;
-            char proxPosicao = mapa[linhaDeCima][colunaAtual];
-            if(proxPosicao == ' ' || proxPosicao == 'J' || proxPosicao == 'C'){
-                jogador.posicao.linha--;
-                if(proxPosicao == 'C'){
-                    jogador.chaves++;
-                    mapa[linhaDeCima][colunaAtual] = ' ';
+            //movitacao do jogador
+            if (IsKeyPressed(KEY_UP)) {
+                int linhaDeCima = jogador.posicao.linha -1;
+                int colunaAtual = jogador.posicao.coluna;
+                char proxPosicao = mapa[linhaDeCima][colunaAtual];
+                if(proxPosicao == ' ' || proxPosicao == 'J' || proxPosicao == 'C'){
+                    jogador.posicao.linha--;
+                    if(proxPosicao == 'C'){
+                        jogador.chaves++;
+                        mapa[linhaDeCima][colunaAtual] = ' ';
+                    }
                 }
             }
-        }
-        if (IsKeyPressed(KEY_DOWN)) {
-            int linhaDeBaixo = jogador.posicao.linha +1;
-            int colunaAtual = jogador.posicao.coluna;
-            char proxPosicao = mapa[linhaDeBaixo][colunaAtual];
-            if(proxPosicao == ' ' || proxPosicao == 'C'){
-                jogador.posicao.linha++;
-                if(proxPosicao == 'C'){
-                    jogador.chaves++;
-                    mapa[linhaDeBaixo][colunaAtual] = ' ';
+            if (IsKeyPressed(KEY_DOWN)) {
+                int linhaDeBaixo = jogador.posicao.linha +1;
+                int colunaAtual = jogador.posicao.coluna;
+                char proxPosicao = mapa[linhaDeBaixo][colunaAtual];
+                if(proxPosicao == ' ' || proxPosicao == 'C'){
+                    jogador.posicao.linha++;
+                    if(proxPosicao == 'C'){
+                        jogador.chaves++;
+                        mapa[linhaDeBaixo][colunaAtual] = ' ';
+                    }
+                }
+            }          
+            if (IsKeyPressed(KEY_LEFT)) {
+                int colunaDaEsquerda = jogador.posicao.coluna -1;
+                int linhaAtual = jogador.posicao.linha;
+                char proxPosicao = mapa[linhaAtual][colunaDaEsquerda];
+                if(proxPosicao == ' ' || proxPosicao == 'J' || proxPosicao == 'C'){
+                    jogador.posicao.coluna--;
+                    if(proxPosicao == 'C'){
+                        jogador.chaves++;
+                        mapa[linhaAtual][colunaDaEsquerda] = ' ';
+                    }
                 }
             }
-        }          
-        if (IsKeyPressed(KEY_LEFT)) {
-            int colunaDaEsquerda = jogador.posicao.coluna -1;
-            int linhaAtual = jogador.posicao.linha;
-            char proxPosicao = mapa[linhaAtual][colunaDaEsquerda];
-            if(proxPosicao == ' ' || proxPosicao == 'J' || proxPosicao == 'C'){
-                jogador.posicao.coluna--;
-                if(proxPosicao == 'C'){
-                    jogador.chaves++;
-                    mapa[linhaAtual][colunaDaEsquerda] = ' ';
+            if (IsKeyPressed(KEY_RIGHT)) {
+                int colunaDaDireita = jogador.posicao.coluna +1;
+                int linhaAtual = jogador.posicao.linha;
+                char proxPosicao =  mapa[linhaAtual][colunaDaDireita];
+                if(proxPosicao == ' ' || proxPosicao == 'C'){
+                    jogador.posicao.coluna++;
+                    if(proxPosicao == 'C'){
+                        jogador.chaves++;
+                        mapa[linhaAtual][colunaDaDireita] = ' ';
+                    }
                 }
             }
-        }
-        if (IsKeyPressed(KEY_RIGHT)) {
-            int colunaDaDireita = jogador.posicao.coluna +1;
-            int linhaAtual = jogador.posicao.linha;
-            char proxPosicao =  mapa[linhaAtual][colunaDaDireita];
-            if(proxPosicao == ' ' || proxPosicao == 'C'){
-                jogador.posicao.coluna++;
-                if(proxPosicao == 'C'){
-                    jogador.chaves++;
-                    mapa[linhaAtual][colunaDaDireita] = ' ';
+
+            // logica das bombas
+            float intervalo = GetFrameTime();
+            atualizarBombas(bombas, intervalo, mapa, inimigos, &jogador);
+            if (IsKeyPressed(KEY_B)) {
+                if (plantarBombas(bombas, jogador.posicao, jogador.bombas)) {
+                    jogador.bombas--; // desconta do arsenal
                 }
             }
-        }
 
-        // logica das bombas
-        float intervalo = GetFrameTime();
-        atualizarBombas(bombas, intervalo, mapa, inimigos, &jogador);
-        if (IsKeyPressed(KEY_B)) {
-            if (plantarBombas(bombas, jogador.posicao, jogador.bombas)) {
-                jogador.bombas--; // desconta do arsenal
+            desenharBombas(bombas);
+
+            //Game Over
+            if(jogador.vidas == 0){
+                gameOver = 1;
+                tempoGameOver = GetTime();
             }
-        }
 
-        desenharBombas(bombas);
 
-        // Passando para o proximo nivel
-        if(jogador.chaves == 5 && !nivelCompleto){
-            nivelCompleto = 1;
-            tempoAlertaNivel = GetTime();
-        }
-
-        if(nivelCompleto){
-            const char *msgNivel = "NOVO NIVEL!!!";
-            int tamFonte = 30;
-            int larguraTexto = MeasureText(msgNivel, tamFonte);
-            int x = (1200 - larguraTexto)/2; //deixar texto no meio
-            int y = 250;
-
-            DrawRectangle(x-10, y-10, larguraTexto + 20, tamFonte+20, PURPLE);
-            DrawText(msgNivel, x, y, tamFonte, WHITE);
-            if(GetTime() - tempoAlertaNivel >= 2.0){
-                nivelCompleto = 0;
-                jogador.chaves = 0;
-                jogador.posicao.linha = 1;
-                jogador.posicao.coluna = 1;
-
-                finalizarMapa(mapa);
-                mapa = inicializarMapa("mapas/mapaA.txt");
+            // Passando para o proximo nivel
+            if(jogador.chaves == 5 && !nivelCompleto){
+                nivelCompleto = 1;
+                tempoAlertaNivel = GetTime();
             }
-        }
+
+            if(nivelCompleto){
+                const char *msgNivel = "NOVO NIVEL!!!";
+                int tamFonte = 30;
+                int larguraTexto = MeasureText(msgNivel, tamFonte);
+                int x = (1200 - larguraTexto)/2; //deixar texto no meio
+                int y = 250;
+
+                DrawRectangle(x-10, y-10, larguraTexto + 20, tamFonte+20, PURPLE);
+                DrawText(msgNivel, x, y, tamFonte, WHITE);
+                if(GetTime() - tempoAlertaNivel >= 2.0){
+                    nivelCompleto = 0;
+                    jogador.chaves = 0;
+                    jogador.posicao.linha = 1;
+                    jogador.posicao.coluna = 1;
+
+                    finalizarMapa(mapa);
+                    mapa = inicializarMapa("mapas/mapaA.txt");
+                }
+            }
+        } else {
+            const char *msgGameOver = "GAME OVER";
+            int tamFonte = 50;
+            int larguraTexto = MeasureText(msgGameOver, tamFonte);
+            int x = (GetScreenWidth() - larguraTexto)/2;
+            int y = (GetScreenHeight() - tamFonte)/2;
+
+            DrawRectangle(x-20, y-20, larguraTexto + 40, tamFonte +40, PURPLE);
+            DrawText(msgGameOver, x, y, tamFonte, WHITE);
+
+            if(GetTime() - tempoGameOver >= 2.0){
+                reiniciaJogo(&mapa, &jogador, bombas, inimigos, &gameOver);
+            }
+
+        } 
 
         ////////////Desenho do painel na parte inferior
         DrawRectangle(0, LINHAS * 20, COLUNAS * 20, 100, BLACK);

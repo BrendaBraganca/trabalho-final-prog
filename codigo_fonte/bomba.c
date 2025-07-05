@@ -105,4 +105,23 @@ void desenharBombas(tipoBomba bombas []){
             DrawRectangle(x, y, 20, 20, ORANGE); // centro da explosao
             DrawRectangle(x-20, y, 20, 20, ORANGE);  // uma casa para a esquerda
             DrawRectangle(x+20, y, 20, 20, ORANGE); // uma casa para direita
-            DrawRectangle(x
+            DrawRectangle(x, y-20, 20, 20, ORANGE); // uma casa para cima
+            DrawRectangle(x, y +20, 20, 20, ORANGE); //uma casa para baixo
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
