@@ -19,9 +19,4 @@ typedef struct {
 void inicializarBombas(tipoBomba bombas[]);
 int plantarBombas(tipoBomba bombas[], tipoPosicao posicao, int bombasRestantes); // retorna se a bomba conseguiu ser plantada ou não
 void explodirBombas(tipoBomba *bomba, char **mapa, tipoInimigo inimigos[], tipoJogador *jogador);
-void atualizarBombas(tipoBomba bombas[], float intervalo, char **mapa, tipoInimigo inimigos[], tipoJogador *jogador);
-void desenharBombas(tipoBomba bombas[]);
-
-
-
-
+void atualizarBombas(tipoBomba bombas[], float intervalo, char **mapa, tipoInimigo in

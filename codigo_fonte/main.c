@@ -3,6 +3,7 @@
 #include "jogador.h"
 #include "inimigo.h"
 #include "bomba.h"
+#include "save.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -53,6 +54,9 @@ int main(void) {
     int gameOver = 0;
     double tempoGameOver = 0;
 
+    //Logica do menu
+    int menuTAB = 0;
+
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
@@ -90,13 +94,13 @@ int main(void) {
                             DrawRectangle(x, y, 20, 20, DARKGRAY);
                             break;
                         case 'D': // parede destruivel
-                            DrawRectangle(x, y, 20, 20, GRAY);
+                            DrawRectangle(x, y, 20, 20, BROWN);
                             break;
                         case 'K': // caixa com chave
-                            DrawRectangle(x, y, 20, 20, PURPLE); //depois colocar em marrom dnv
+                            DrawRectangle(x, y, 20, 20, PURPLE); 
                             break;
                         case 'B': //caixa sem chave
-                            DrawRectangle(x, y, 20, 20, BROWN);
+                            DrawRectangle(x, y, 20, 20, PURPLE);
                             break;
                         case ' ':
                             DrawRectangle(x, y, 20, 20, LIGHTGRAY);
@@ -116,6 +120,48 @@ int main(void) {
 
             //desenha os inimigos a partir da struct tambem
             desenhaInimigos(inimigos);
+
+            //implementa menu
+            if(IsKeyPressed(KEY_TAB)){
+                menuTAB = !menuTAB; //ativa e desativa menu
+            }
+
+            if(menuTAB){
+                const char *acoes[] = {
+                    "N -> Novo Jogo",
+                    "C -> Carregar Jogo",
+                    "S -> Salvar Jogo",
+                    "Q -> Sair do Jogo",
+                    "V -> Voltar ao Jogo"
+                };
+
+                for(int i = 0; i < 5; i++){
+                    DrawText(acoes[i], 400, 100 + i * 30, 20, BLACK);
+                }
+                if(IsKeyPressed(KEY_N)){
+                    reiniciaJogo(&mapa, &jogador, bombas, inimigos, &gameOver);
+                    menuTAB = 0;
+                }
+                if(IsKeyPressed(KEY_C)){
+                    if(carregarJogo("bin/preJogado.dat", &jogador, bombas, inimigos, &mapa) == 0){
+                        menuTAB = 0;
+                    }; // escrever essa funcao
+                }
+                if(IsKeyPressed(KEY_S)){
+                    salvarJogo("bin/jogoSalvo.dat", jogador, bombas, inimigos, mapa);
+                    menuTAB = 0;
+                }
+                if(IsKeyPressed(KEY_Q)){
+                    CloseWindow();
+                    return 0;
+                }
+                if(IsKeyPressed(KEY_V)){
+                    menuTAB = 0;
+                }
+                EndDrawing();
+                continue; // "pausa" o jogo até sair do menu
+            }
+
 
             //movitacao do jogador
             if (IsKeyPressed(KEY_UP)) {
