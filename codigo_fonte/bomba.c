@@ -10,7 +10,7 @@ void inicializarBombas(tipoBomba bombas[]){
     for(int i =0; i < MAX_BOMBAS; i++){
         bombas[i].ativa = 0;
         bombas[i].explodindo = 0;
-        bombas[i].tempoRestante = 00;
+        bombas[i].tempoRestante = 0;
     }
 }
 
@@ -111,18 +111,4 @@ void desenharBombas(tipoBomba bombas []){
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

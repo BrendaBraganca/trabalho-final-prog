@@ -145,7 +145,7 @@ int main(void) {
                 if(IsKeyPressed(KEY_C)){
                     if(carregarJogo("bin/preJogado.dat", &jogador, bombas, inimigos, &mapa) == 0){
                         menuTAB = 0;
-                    }; // escrever essa funcao
+                    }; 
                 }
                 if(IsKeyPressed(KEY_S)){
                     salvarJogo("bin/jogoSalvo.dat", jogador, bombas, inimigos, mapa);

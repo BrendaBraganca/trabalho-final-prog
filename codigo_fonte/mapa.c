@@ -3,21 +3,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-// O mapa é uma matriz de caracteres
-// O ponteiro para ponteiro ** permite que essa matriz seja alocada dinanmicamente
-// O path (caminho para o arquivo de mapa que ainda vai ser renderizado) esta declarado como const porque ele vai ser usado somente para leitura e qualquer alteracao nele pode causar um erro
-
-
 char **inicializarMapa(const char *path){
     FILE *arqMapa = fopen(path, "r");
     if(!arqMapa){
-        perror("ERRO: o arquivo referente ao mapa nao pode ser aberto."); //funcao para tratar erro 
         return NULL;
     }
 
     char **mapa = malloc(LINHAS * sizeof(char *));
     if(!mapa){
-        perror("ERRO: a memoria nao pode ser alocada para a criacao do mapa.");
         fclose(arqMapa);
         return NULL;
     }
@@ -36,7 +29,6 @@ char **inicializarMapa(const char *path){
         
         mapa[linhaAtual] = malloc(COLUNAS + 1); // +1 por causa do \0
         if(!mapa[linhaAtual]){
-            perror("ERRO: nao foi possivel alocar memoria para a linha atual do mapa");
             finalizarMapa(mapa);
             fclose(arqMapa);
             return NULL;
@@ -45,7 +37,6 @@ char **inicializarMapa(const char *path){
         memcpy(mapa[linhaAtual], linhaDoArquivo, COLUNAS); //copia a linha do arquivo do mapa para a estrutura do mapa
         mapa[linhaAtual][COLUNAS] ='\0';
         
-        // FAZER UMA FUNCAO PARA VALIDAR CARACTERES??
         linhaAtual++;
     }
 

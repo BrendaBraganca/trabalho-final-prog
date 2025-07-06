@@ -9,7 +9,4 @@ all: $(OUT)
 $(OUT): $(SRC)
 	$(CC) $(SRC) -o $(OUT) $(CFLAGS) $(LDFLAGS)
 
-clean:
-	rm -f $(OUT)
-
-
+cle
